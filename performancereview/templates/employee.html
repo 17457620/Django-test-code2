@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <br><br>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{ employee.image.url }}" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <center>
+                        <h5 class="card-title">{{ employee.first_name }} {{ employee.last_name }}</h5>
+                        <p class="card-text">
+                            {% for performancereview in performancereviews %}
+                                <div class="performance-review">
+                                    <h6>{{ performancereview.EmployeeName }}</h6>
+                                    
+                                    <p class="card-text">
+<!--                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'employee' employee.employeeID %}"> {{ performancereview.id }}</a>
+                                        </div>
+                                    </div> -->
+
+
+                                        Job Knowledge: {{ performancereview.jobKnowledge }} <br>
+                                        Work Quality: {{ performancereview.workQuality }} <br>
+                                        Initiative: {{ performancereview.initiative }} <br>
+                                        Communication: {{ performancereview.communication }} <br>
+                                        Dependability: {{ performancereview.dependability }} <br>
+                                    </p>
+
+                                    <p><small class="text-muted">Reviewed on: {{ performancereview.dateOfReview }}</small></p>
+                                    <br><br>
+                                </div>
+                            {% empty %}
+                                <p class="card-text">No performance reviews found for this employee.</p>
+                            {% endfor %}
+                        </p>
+                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+{% endblock %}

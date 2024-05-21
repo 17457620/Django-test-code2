@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Employee
+from .models import Employee, PerformanceReview
 #Django already has login and logout functionality
 from django.contrib.auth import authenticate, login, logout
 #Displays error messages
@@ -9,6 +9,39 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
 
+
+# #Testing to display on employees PRs on that employee page
+# def employee(request,employeeID):
+# 	#variables to hold all employee and PR objects.
+# 	employees = Employee.objects.all()
+# 	performancereviews = PerformanceReview.objects.all()
+	
+# 	#variables to get just that employee info once clicked on
+# 	#that specific employee page
+# 	user = User.objects.username
+# 	employee = Employee.objects.get(employeeID=employeeID)
+
+# 	#Get only the performance reviews for that employee with employeeID
+# 	#performancereview = PerformanceReview.objects.
+
+# 	return render(request, 'employee.html', {'employee':employee})
+
+def employee(request, employeeID):
+    try:
+        # Get the specific employee based on the provided employeeID
+        employee = Employee.objects.get(employeeID=employeeID)
+        
+        # Get all performance reviews for the specific employee
+        performancereviews = PerformanceReview.objects.filter(employeeID=employee)
+        
+        return render(request, 'employee.html', {
+            'employee': employee,
+            'performancereviews': performancereviews
+        })
+    except Employee.DoesNotExist:
+        # Handle the case where the employee does not exist
+        messages.error(request, "Employee not found.")
+        return redirect('home')
 
 
 
@@ -54,7 +87,7 @@ def register_user(request):
 			password = form.cleaned_data['password1']
 			#log in user
 			user = authenticate(username=username, password=password)
-			login(request, user)
+			#login(request, user)
 			messages.success(request, ("Successfully registered account."))
 			return redirect('home')
 		else:
