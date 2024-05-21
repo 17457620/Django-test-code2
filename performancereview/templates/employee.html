@@ -14,30 +14,20 @@
                         <p class="card-text">
                             {% for performancereview in performancereviews %}
                                 <div class="performance-review">
-                                    <h6>{{ performancereview.EmployeeName }}</h6>
-                                    
-                                    <p class="card-text">
-<!--                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'employee' employee.employeeID %}"> {{ performancereview.id }}</a>
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-dark mt-auto" href="{% url 'performancereviewdisplay' performancereview.id %}">
+                                                Performance Review Form ID: {{ performancereview.id }}
+                                            </a>
                                         </div>
-                                    </div> -->
-
-
-                                        Job Knowledge: {{ performancereview.jobKnowledge }} <br>
-                                        Work Quality: {{ performancereview.workQuality }} <br>
-                                        Initiative: {{ performancereview.initiative }} <br>
-                                        Communication: {{ performancereview.communication }} <br>
-                                        Dependability: {{ performancereview.dependability }} <br>
-                                    </p>
-
-                                    <p><small class="text-muted">Reviewed on: {{ performancereview.dateOfReview }}</small></p>
-                                    <br><br>
+                                        <small class="text-muted">Created on: {{ performancereview.dateOfReview }}</small>
+                                    </div>
                                 </div>
                             {% empty %}
                                 <p class="card-text">No performance reviews found for this employee.</p>
                             {% endfor %}
                         </p>
-                        <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                        <!-- <p class="card-text"><small class="text-body-secondary">Testing</small></p> -->
                     </center>
                 </div>
             </div>

@@ -1,6 +1,34 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from .models import PerformanceReview
+
+
+
+class PerformanceReviewForm(forms.ModelForm):
+    dateOfReview = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+    timeOfReview = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}))
+    # employeeName = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Employee-Name'}))
+
+    class Meta:
+        model = PerformanceReview
+        fields = ['employeeName','employeeID', 'position', 'dateOfReview', 'timeOfReview', 
+                  'jobKnowledge', 'workQuality', 'initiative', 'communication', 'dependability', 
+                  'overallFeedback']
+
+        widgets = {
+            # 'employeeName': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'employeeID': forms.TextInput(attrs={'class': 'form-control'}),
+            'position': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'jobKnowledge': forms.Select(attrs={'class': 'form-control'}),
+            # 'workQuality': forms.Select(attrs={'class': 'form-control'}),
+            # 'initiative': forms.Select(attrs={'class': 'form-control'}),
+            # 'communication': forms.Select(attrs={'class': 'form-control'}),
+            # 'dependability': forms.Select(attrs={'class': 'form-control'}),
+            'overallFeedback': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+
+
 
 class SignUpForm(UserCreationForm):
 	email = forms.EmailField(label="", widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address'}))

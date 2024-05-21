@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <br><br>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Performance Review ID Number: {{ performancereview.id }} <br><br>
+            {{ performancereview.employeeID.first_name }} {{ performancereview.employeeID.last_name }}</h5>
+            <p class="card-text">
+                <strong>Job Knowledge:</strong> {{ performancereview.jobKnowledge }}<br>
+                <strong>Work Quality:</strong> {{ performancereview.workQuality }}<br>
+                <strong>Dependability:</strong> {{ performancereview.dependability }}<br>
+                <strong>Communication:</strong> {{ performancereview.communication }}<br>
+                <strong>Initiative:</strong> {{ performancereview.initiative }}<br>
+                <strong>Date of Review:</strong> {{ performancereview.dateOfReview }}<br>
+                <strong>Time of Review:</strong> {{ performancereview.timeOfReview }}<br>
+                <strong>Overall Feedback:</strong><br> {{ performancereview.overallFeedback }}<br>
+            </p>
+            <a href="{% url 'employee' performancereview.employeeID.employeeID %}" class="btn btn-primary">Back to Employee</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

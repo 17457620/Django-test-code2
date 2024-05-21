@@ -83,13 +83,14 @@ class PerformanceReview(models.Model):
 	#employeeID = models.CharField(max_length=30)
 	employeeID = models.ForeignKey(Employee, on_delete=models.CASCADE)
 	position = models.CharField(max_length=50)
-	dateOfReview = models.CharField(max_length=30)
-	timeOfReview = models.CharField(max_length=30)
+	dateOfReview = models.DateField(max_length=30)
+	timeOfReview = models.TimeField(max_length=30)
 	jobKnowledge = models.CharField(max_length=30)
 	workQuality = models.CharField(max_length=30)
 	initiative = models.CharField(max_length=30)
 	communication = models.CharField(max_length=30)
 	dependability = models.CharField(max_length=30)
+	overallFeedback = models.TextField(max_length=2000, blank=True, null=True)
 	#employeeAccept = models.BooleanField(default=False) #Might need to edit this
 
 	def __int__(self): 

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Employee, PerformanceReview
 #Django already has login and logout functionality
 from django.contrib.auth import authenticate, login, logout
@@ -9,31 +9,43 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
 from django import forms
 
+from .forms import PerformanceReviewForm
 
-# #Testing to display on employees PRs on that employee page
-# def employee(request,employeeID):
-# 	#variables to hold all employee and PR objects.
-# 	employees = Employee.objects.all()
-# 	performancereviews = PerformanceReview.objects.all()
-	
-# 	#variables to get just that employee info once clicked on
-# 	#that specific employee page
-# 	user = User.objects.username
-# 	employee = Employee.objects.get(employeeID=employeeID)
 
-# 	#Get only the performance reviews for that employee with employeeID
-# 	#performancereview = PerformanceReview.objects.
+def performancereviewform(request):
+    if request.method == 'POST':
+        form = PerformanceReviewForm(request.POST)
+        # #Get user input for the employee name box
+        # employeeName = request.POST['name']
 
-# 	return render(request, 'employee.html', {'employee':employee})
+        # #Create a new performance review object using the user input name
+        # newPR = PerformanceReview(employeeName = employeeName)
+        # newPR.save()
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, ("Successfully created Performance Review"))
+            return redirect('home')  # replace with your success URL
+        else:
+        	messages.success(request, ("There was an error. Please try again."))
+        	return redirect('performancereviewform')
+
+    else:
+        form = PerformanceReviewForm()
+
+    return render(request, 'performancereviewform.html', {'form': form})
+
+
+
 
 def employee(request, employeeID):
     try:
         # Get the specific employee based on the provided employeeID
         employee = Employee.objects.get(employeeID=employeeID)
         
-        # Get all performance reviews for the specific employee
-        performancereviews = PerformanceReview.objects.filter(employeeID=employee)
-        
+        # Get all performance reviews for the specific employee and order them by review date (most recent at top)
+        performancereviews = PerformanceReview.objects.filter(employeeID=employee).order_by('-dateOfReview')
+
         return render(request, 'employee.html', {
             'employee': employee,
             'performancereviews': performancereviews
@@ -43,6 +55,12 @@ def employee(request, employeeID):
         messages.error(request, "Employee not found.")
         return redirect('home')
 
+
+def performancereviewdisplay(request, id):
+    performancereview = get_object_or_404(PerformanceReview, id=id)
+    return render(request, 'performancereviewdisplay.html', {
+        'performancereview': performancereview
+    })
 
 
 def home(request):
@@ -73,8 +91,9 @@ def logout_user(request):
 	messages.success(request, ("Successfully logged out."))
 	return redirect('home')
 
-def performancereviewform(request):
-	return render(request, 'performancereviewform.html', {})
+#Commented out for testing
+# def performancereviewform(request):
+# 	return render(request, 'performancereviewform.html', {})
 
 #We need passwords that are less than 8 characters in length RIP
 def register_user(request):
