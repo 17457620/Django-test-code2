@@ -12,28 +12,64 @@ from django import forms
 from .forms import PerformanceReviewForm
 
 
+
+# def performancereviewform(request):
+#     if request.method == 'POST':
+#         #Get user input for all the boxes
+#         employeeName = request.POST['name']
+#         employeeID = request.POST['employeeID']
+#         position = request.POST['position']
+#         jobKnowledge = request.POST['jobKnowledge']
+#         workQuality = request.POST['workQuality']
+#         initiative = request.POST['initiative']
+#         communication = request.POST['communication']
+#         dependability = request.POST['dependability']
+
+#         #Create a new performance review object using the user input name
+#         newPR = PerformanceReview(employeeName = employeeName, employeeID=employeeID, position=position, jobKnowledge=jobKnowledge, workQuality=workQuality, initiative=initiative, communication=communication, dependability=dependability)
+        
+
+#         newPR.save()
+#         messages.success(request, ("Successfully created Performance Review"))
+#         return redirect('home')  # replace with your success URL
+
+
+#     return render(request, 'performancereviewform.html', {})
+
+
+
 def performancereviewform(request):
     if request.method == 'POST':
         form = PerformanceReviewForm(request.POST)
-        # #Get user input for the employee name box
-        # employeeName = request.POST['name']
-
-        # #Create a new performance review object using the user input name
-        # newPR = PerformanceReview(employeeName = employeeName)
-        # newPR.save()
-        
         if form.is_valid():
-            form.save()
-            messages.success(request, ("Successfully created Performance Review"))
-            return redirect('home')  # replace with your success URL
+            employeeID = form.cleaned_data['employeeID']
+            employee = get_object_or_404(Employee, employeeID=employeeID)
+            
+            # Create a new performance review object using the cleaned data
+            newPR = PerformanceReview(
+                employeeName=form.cleaned_data['employeeName'],
+                employeeID=employee,  # Assign the Employee instance
+                position=form.cleaned_data['position'],
+                dateOfReview=form.cleaned_data['dateOfReview'],
+                timeOfReview=form.cleaned_data['timeOfReview'],
+                jobKnowledge=form.cleaned_data['jobKnowledge'],
+                workQuality=form.cleaned_data['workQuality'],
+                initiative=form.cleaned_data['initiative'],
+                communication=form.cleaned_data['communication'],
+                dependability=form.cleaned_data['dependability'],
+                overallFeedback=form.cleaned_data['overallFeedback'],
+            )
+            newPR.save()
+            messages.success(request, "Successfully created Performance Review")
+            return redirect('home')  # Replace with your success URL
         else:
-        	messages.success(request, ("There was an error. Please try again."))
-        	return redirect('performancereviewform')
-
+            messages.error(request, "There was an error. Please try again.")
+            return redirect('performancereviewform')
     else:
         form = PerformanceReviewForm()
-
+    
     return render(request, 'performancereviewform.html', {'form': form})
+
 
 
 

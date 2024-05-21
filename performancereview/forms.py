@@ -5,26 +5,56 @@ from .models import PerformanceReview
 
 
 
+# class PerformanceReviewForm(forms.ModelForm):
+#     dateOfReview = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
+#     timeOfReview = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}))
+#     # employeeName = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Employee-Name'}))
+
+#     # class Meta:
+#     #     model = PerformanceReview
+#     #     fields = ['employeeID']
+
+#         # widgets = {
+#         #     # 'employeeName': forms.TextInput(attrs={'class': 'form-control'}),
+#         #     # 'employeeID': forms.TextInput(attrs={'class': 'form-control'}),
+#         #     # 'position': forms.TextInput(attrs={'class': 'form-control'}),
+#         #     # 'jobKnowledge': forms.Select(attrs={'class': 'form-control'}),
+#         #     # 'workQuality': forms.Select(attrs={'class': 'form-control'}),
+#         #     # 'initiative': forms.Select(attrs={'class': 'form-control'}),
+#         #     # 'communication': forms.Select(attrs={'class': 'form-control'}),
+#         #     # 'dependability': forms.Select(attrs={'class': 'form-control'}),
+#         #     # 'overallFeedback': forms.Textarea(attrs={'class': 'form-control'}),
+#         # }
+
+
 class PerformanceReviewForm(forms.ModelForm):
     dateOfReview = forms.DateField(widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}))
     timeOfReview = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'}))
-    # employeeName = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Employee-Name'}))
-
+    
     class Meta:
         model = PerformanceReview
-        fields = ['employeeName','employeeID', 'position', 'dateOfReview', 'timeOfReview', 
-                  'jobKnowledge', 'workQuality', 'initiative', 'communication', 'dependability', 
-                  'overallFeedback']
-
+        fields = [
+            'employeeName', 
+            'employeeID', 
+            'position', 
+            'dateOfReview', 
+            'timeOfReview',
+            'jobKnowledge', 
+            'workQuality', 
+            'initiative', 
+            'communication', 
+            'dependability', 
+            'overallFeedback'
+        ]
         widgets = {
-            # 'employeeName': forms.TextInput(attrs={'class': 'form-control'}),
-            # 'employeeID': forms.TextInput(attrs={'class': 'form-control'}),
+            'employeeName': forms.TextInput(attrs={'class': 'form-control'}),
+            'employeeID': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a dropdown
             'position': forms.TextInput(attrs={'class': 'form-control'}),
-            # 'jobKnowledge': forms.Select(attrs={'class': 'form-control'}),
-            # 'workQuality': forms.Select(attrs={'class': 'form-control'}),
-            # 'initiative': forms.Select(attrs={'class': 'form-control'}),
-            # 'communication': forms.Select(attrs={'class': 'form-control'}),
-            # 'dependability': forms.Select(attrs={'class': 'form-control'}),
+            'jobKnowledge': forms.Select(attrs={'class': 'form-control'}),
+            'workQuality': forms.Select(attrs={'class': 'form-control'}),
+            'initiative': forms.Select(attrs={'class': 'form-control'}),
+            'communication': forms.Select(attrs={'class': 'form-control'}),
+            'dependability': forms.Select(attrs={'class': 'form-control'}),
             'overallFeedback': forms.Textarea(attrs={'class': 'form-control'}),
         }
 

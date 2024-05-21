@@ -77,24 +77,36 @@ class Employee(models.Model):
 		return self.employeeID
 
 #Performance Review forms (include PR form attributes)
-class PerformanceReview(models.Model): 
-	employeeName = models.CharField(max_length=100) 
-	#employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-	#employeeID = models.CharField(max_length=30)
-	employeeID = models.ForeignKey(Employee, on_delete=models.CASCADE)
-	position = models.CharField(max_length=50)
-	dateOfReview = models.DateField(max_length=30)
-	timeOfReview = models.TimeField(max_length=30)
-	jobKnowledge = models.CharField(max_length=30)
-	workQuality = models.CharField(max_length=30)
-	initiative = models.CharField(max_length=30)
-	communication = models.CharField(max_length=30)
-	dependability = models.CharField(max_length=30)
-	overallFeedback = models.TextField(max_length=2000, blank=True, null=True)
-	#employeeAccept = models.BooleanField(default=False) #Might need to edit this
+class PerformanceReview(models.Model):
+    EXCELLENT = '5-Excellent'
+    EXCEEDS_EXPECTATIONS = '4-Exceeds Expectations'
+    MEETS_EXPECTATIONS = '3-Meets Expectations'
+    NEEDS_IMPROVEMENT = '2-Needs Improvement'
+    UNACCEPTABLE = '1-Unacceptable'
 
-	def __int__(self): 
-		return self.id
+    RATING_CHOICES = [
+        (EXCELLENT, '5-Excellent'),
+        (EXCEEDS_EXPECTATIONS, '4-Exceeds Expectations'),
+        (MEETS_EXPECTATIONS, '3-Meets Expectations'),
+        (NEEDS_IMPROVEMENT, '2-Needs Improvement'),
+        (UNACCEPTABLE, '1-Unacceptable'),
+    ]
+
+    employeeName = models.CharField(max_length=100)
+    employeeID = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    position = models.CharField(max_length=50)
+    dateOfReview = models.DateField(max_length=30)
+    timeOfReview = models.TimeField(max_length=30)
+    jobKnowledge = models.CharField(max_length=30, choices=RATING_CHOICES)
+    workQuality = models.CharField(max_length=30, choices=RATING_CHOICES)
+    initiative = models.CharField(max_length=30, choices=RATING_CHOICES)
+    communication = models.CharField(max_length=30, choices=RATING_CHOICES)
+    dependability = models.CharField(max_length=30, choices=RATING_CHOICES)
+    overallFeedback = models.TextField(max_length=2000, blank=True, null=True)
+    
+    def __int__(self):
+        return self.id
+
 
 #Dunder Mifflin Branches
 class Branch(models.Model): 

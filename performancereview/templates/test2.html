@@ -16,7 +16,7 @@
                 <br>
                 <form method="POST" action="{% url 'performancereviewform' %}">
                     {% csrf_token %}
-
+                    {{ form.as_p }}
                     <div class="mb-3">
                         <label for="inputName" class="form-label text-start">Name</label>
                         <input type="text" class="form-control" id="inputName" name="name" placeholder="e.g. Bob Smith">

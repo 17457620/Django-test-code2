@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
-
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
@@ -9,8 +7,6 @@
             <p class="lead fw-normal text-white-50 mb-0">Create a performance review</p>
         </div>
     </div>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </header>
 
 <div class="container">
@@ -19,11 +15,7 @@
             <br>
             <form method="POST" action="{% url 'performancereviewform' %}">
                 {% csrf_token %}
-                {{ form.as_p }}
-<!--                     <div class="mb-3">
-                        <label for="inputName" class="form-label text-start">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Bob Smith">
-                    </div> -->
+                {{ form.as_p }} <!-- Imports the performance review form from forms.py -->
                 <button type="submit" class="btn btn-primary" style="margin-right: 10px;" id="createButton">Create</button>
                 <button type="submit" class="btn btn-secondary" id="saveButton">Save</button>
                 <br><br><br>
@@ -32,3 +24,5 @@
     </div>
 </div>
 {% endblock %}
+
+

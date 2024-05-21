@@ -20,7 +20,7 @@
 <form method="POST" action="{% url 'register' %}">
     {% csrf_token %}
     
-    {{ form.as_p }}
+    {{ form.as_p }} <!-- Imports the register form from forms.py -->
     <br/><br/>
     <button type="submit" class="btn btn-primary">
       Register
