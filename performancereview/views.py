@@ -106,26 +106,42 @@ def home(request):
 def about(request):
 	return render(request, 'about.html', {})
 
-def login_user(request):
-	if request.method == "POST":
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			login(request, user)
-			messages.success(request, ("Successfully logged in."))
-			return redirect('home')
-		else: 
-			messages.success(request, ("There was an error. Please try again."))
-			return redirect('login')
+# def login_user(request):
+# 	if request.method == "POST":
+# 		username = request.POST['username']
+# 		password = request.POST['password']
+# 		user = authenticate(request, username=username, password=password)
+# 		if user is not None:
+# 			login(request, user)
+# 			messages.success(request, ("Successfully logged in."))
+# 			return redirect('home')
+# 		else: 
+# 			messages.success(request, ("There was an error. Please try again."))
+# 			return redirect('login')
 
-	else:
-		return render(request, 'login.html', {})
+# 	else:
+# 		return render(request, 'login.html', {})
+
+def login_user(request):
+    if request.method == "POST":
+        employeeID = request.POST['employeeID']
+        password = request.POST['password']
+        user = authenticate(request, username=employeeID, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.success(request, ("There was an error. Please try again."))
+            return redirect('login')
+    else:
+        return render(request, 'Login.html', {})
+
+
 
 def logout_user(request):
 	logout(request)
 	messages.success(request, ("Successfully logged out."))
-	return redirect('home')
+	return redirect('login')
 
 #Commented out for testing
 # def performancereviewform(request):

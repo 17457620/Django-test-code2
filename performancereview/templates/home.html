@@ -1,49 +1,69 @@
-{% extends 'base.html' %}
+{% load static %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
 
-        <!-- Header-->
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">Performance Reviews</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">Select an employee (add a search bar here that will filter employees by name).</p>
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="{% static 'Hcss/Home.css' %}">
+</head>
+
+<body>
+    <div class="navbar">
+        <p class="company">Dunder Mifflin Paper Company, Inc.</p>
+        <p class="welcomeTime">Welcome {{ user.username }}. The current time is <span id="Time"></span></p>
+        <ul class="navLinks">
+            <li><a class="modalBtn" onclick="document.getElementById('modalback').style.display='block'">Log Out</a>
+            </li>
+            <li><a href="#" class="modalBtn">Peformance Review</a></li>
+            {% if user.is_superuser %}
+            <li><a href="{% url 'performancereviewform' %}" class="modalBtn">Create Performance Review</a></li>
+            <li><a href="{% url 'register' %}" class="modalBtn">Register New Employee</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div id="modalback" class="modalback">
+        <form class="modalContent" action="">
+            <div class="modalContentWords">
+                <p>Are you sure you want to logout?</p>
+                <div class="modalContentBtn">
+                    <button type="button" onclick="Logout()" class="logoutBtn">Log Out</button>
+                    <button type="button" onclick="document.getElementById('modalback').style.display='none'" class="cancelBtn">Cancel</button>
                 </div>
             </div>
-        </header>
-        <!-- Section-->
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    
-                    {% for employee in employees %}
-                    <div class="col mb-5">
-                        <div class="card h-100">
-                            <!-- Product image-->
-                            <img class="card-img-top" src="{{ employee.image.url }}" alt="..." />
-                            <!-- Product details-->
-                            <div class="card-body p-4">
-                                <div class="text-center">
-                                    <!-- Product name-->
-                                    <h5 class="fw-bolder">{{ employee.first_name }} {{ employee.last_name }}</h5>
-                                    <!-- Product price-->
-                                    {{ employee.position }}
-                                </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'employee' employee.employeeID %}">View performance reviews</a></div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+        </form>
+    </div>
+    </div>
+    <div class="seperate">
+        <div class="homeMain">
+            <p>
+            <h2>The Dunder Mifflin performance planning and review process</h2> is intended to assist supervisors to
+            review the
+            performance of staff annually and develop agreed performance plans based on workload agreements and the
+            strategic direction of Dunder Mifflin.
+            The Performance Planning and Review system covers both results (what was accomplished), and behaviours (how
+            those results were achieved). The most important aspect is what will be accomplished in the future and how
+            this will be achieved within a defined period. The process is continually working towards creating improved
+            performance and behaviours that align and contribute to the mission and values of Dunder Mifflin.
+            </p>
+        </div>
+    </div>
+    <script>
+        function Logout() {
+            window.location.href = '{% url "logout" %}';
+        }
+        setInterval(() => {
+            var time = new Date();
+            document.getElementById("Time").innerHTML = time.toLocaleTimeString();
+        }, 1000)
+        var modal = document.getElementById('modalback')
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
 
-
-
-                </div>
-            </div>
-        </section>
-
-
-{% endblock %}
-
+</html>

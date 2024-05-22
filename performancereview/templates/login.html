@@ -1,38 +1,37 @@
-{% extends 'base.html' %}
-{% block content %}
-    <!-- Header-->
-    <header class="bg-dark py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Login</h1>
-                <p class="lead fw-normal text-white-50 mb-0">Login to your account</p>
-            </div>
-        </div>
-    </header>
+{% load static %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-8">
-                <br>
-                <form method="POST" action="{% url 'login' %}">
-                    {% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
 
-                    <div class="mb-3">
-                        <label for="inputUsername" class="form-label text-start">Username</label>
-                        <input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter your username">
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputPassword" class="form-label text-start">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Enter your password">
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label text-start" for="exampleCheck1">Remember me</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                    <br><br><br>
-                </form>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'Lcss/Login.css' %}">
+</head>
+
+<body>
+    <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="TimeDate">
+            <p>Welcome to the Dunder Mifflin performance review system. The current time is <span id="Time"></span></p>
         </div>
-    </div>
-{% endblock %}
+        <h1>Sign In</h1>
+        <div>
+            <label>Employee ID:</label>
+            <input type="text" name="employeeID" placeholder="Enter Employee ID">
+        </div>
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" placeholder="Enter Password">
+        </div>
+        <button>Log In</button>
+    </form>
+    <script>
+        setInterval(() => {
+            var time = new Date();
+            document.getElementById("Time").innerHTML = time.toLocaleTimeString();
+        }, 1000)
+    </script>
+</body>
+
+</html>

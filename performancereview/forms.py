@@ -48,7 +48,7 @@ class PerformanceReviewForm(forms.ModelForm):
         ]
         widgets = {
             'employeeName': forms.TextInput(attrs={'class': 'form-control'}),
-            'employeeID': forms.Select(attrs={'class': 'form-control'}),  # Assuming this is a dropdown
+            'employeeID': forms.Select(attrs={'class': 'form-control'}),  # This is a dropdown select box
             'position': forms.TextInput(attrs={'class': 'form-control'}),
             'jobKnowledge': forms.Select(attrs={'class': 'form-control'}),
             'workQuality': forms.Select(attrs={'class': 'form-control'}),
